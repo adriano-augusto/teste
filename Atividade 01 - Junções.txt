@@ -1,0 +1,46 @@
+--atividade01
+--aluno: Adriano Augusto da Silva Almeida
+--data: 21/03/2018
+
+
+
+--Exercício 1
+
+SELECT codigo, nome
+FROM auxiliar
+WHERE bilingue='t' AND salario > 1000;
+
+
+--Exercício 2
+
+SELECT codigo, nome, departamento
+FROM funcionario JOIN projetista USING(codigo)
+WHERE projetista.tipo != 'Iniciante';
+
+
+--Exercício 3
+
+SELECT engenheiro.nome, engenheiro.salario, funcionario.departamento
+FROM engenheiro JOIN funcionario USING(codigo)
+WHERE crea LIKE 'PR%';
+
+
+--Exercício 4
+
+SELECT funcionario.departamento AS nome_departamento
+FROM funcionario JOIN engenheiro USING(codigo)
+WHERE engenheiro.especialidade = 'Civil';
+
+
+--Exercício 5
+
+SELECT funcionario.departamento
+FROM funcionario INNER JOIN projetista ON
+funcionario.codigo = projetista.codigo
+WHERE projetista.tipo='Senior'
+UNION
+SELECT funcionario.departamento
+FROM auxiliar INNER JOIN funcionario ON
+funcionario.codigo = auxiliar.codigo
+WHERE auxiliar.bilingue='t';
+
