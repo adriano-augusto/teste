@@ -1,0 +1,54 @@
+--atividade02 - subconsultas
+--aluno: Adriano Augusto da Silva Almeida
+--data: 28/03/2018
+
+
+
+--Exercício 1
+
+SELECT DISTINCT departamento AS nomes_departamentos
+FROM funcionario
+WHERE departamento <> ALL(
+			SELECT departamento
+			FROM  funcionario JOIN projetista USING(codigo)
+			WHERE projetista.tipo = 'Junior');
+
+
+
+
+--Exercício 2
+
+SELECT nome AS nome_engenheiro, salario AS salario_engenheiro
+FROM engenheiro JOIN funcionario USING(codigo)
+WHERE engenheiro.codigo = funcionario.codigo AND funcionario.departamento = 'Obras'
+AND salario > ALL(
+		SELECT salario
+		FROM engenheiro JOIN funcionario USING(codigo)
+		WHERE engenheiro.codigo = funcionario.codigo AND 
+		funcionario.departamento = 'Suporte');
+
+
+
+
+--Exercício 3
+
+SELECT auxiliar.nome
+FROM auxiliar JOIN funcionario USING(codigo)
+WHERE auxiliar.codigo = funcionario.codigo 
+AND funcionario.departamento = ALL(SELECT DISTINCT departamento 
+				FROM funcionario JOIN engenheiro USING(codigo)
+				WHERE engenheiro.especialidade LIKE 'Civil');
+
+
+
+--Exercício 4
+
+SELECT X.nome, Y.nome
+FROM projetista AS X, projetista AS y
+WHERE X.nivel = Y.nivel AND X.tipo = Y.tipo AND X.codigo <> Y.codigo
+ORDER BY X.nome, Y.nome DESC LIMIT 2;
+
+
+--Exercício 5
+
+
